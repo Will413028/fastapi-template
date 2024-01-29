@@ -24,3 +24,9 @@ Database migration
 ```
 alembic upgrade head
 ```
+
+
+Use docker compose
+```
+sudo docker-compose up -d --build
+```
