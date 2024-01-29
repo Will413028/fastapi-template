@@ -1,17 +1,13 @@
 name: CI/CD
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
   test:
@@ -25,35 +21,35 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install fastapi[all]
-          pip install pytest
           pip install -r requirements.txt
 
       - name: Run tests
         run: python -m pytest
 
-  # This workflow contains a single job called "deploy"
   deploy:
     
     needs: test
 
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Add "id-token" with the intended permissions.
     permissions:
       contents: "read"
       id-token: "write"
 
     env:
-      # Replace $PROJECT_ID with your project ID
       IMAGE_NAME: gcr.io/${{secrets.PROJECT_ID}}/app
 
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -61,16 +57,14 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          # Replace with your Workload Identity Provider Location
           workload_identity_provider: ${{secrets.WORKLOAD_IDENTITY_PROVIDER_LOCATION}}
-          # Replace with your GitHub Service Account
           service_account: ${{secrets.SERVICE_ACCOUNT}}
 
       - name: Configure Docker
         run: gcloud auth configure-docker --quiet
 
       - name: Build Docker image
-        run: docker build . -t $IMAGE_NAME
+        run: docker build . -t $IMAGE_NAME --cache-from $IMAGE_NAME
 
       - name: Push Docker image
         run: docker push $IMAGE_NAME
@@ -84,6 +78,5 @@ jobs:
           service: app
           flags: --port=8080
 
-      # Example of using the output
       - name: Test URL
         run: curl "${{ steps.deploy.outputs.url }}"
