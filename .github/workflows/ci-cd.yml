@@ -1,4 +1,3 @@
-# This is a basic workflow to help you get started with Actions
 name: CD
 
 # Controls when the workflow will run
@@ -26,18 +25,11 @@ jobs:
 
     env:
       # Replace $PROJECT_ID with your project ID
-      IMAGE_NAME: gcr.io/${{secrets.TEST_PROJECT_ID}}/app
+      IMAGE_NAME: gcr.io/${{secrets.PROJECT_ID}}/app
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Check secret length
-        run: echo "The length of the secret is ${#TEST_WORKLOAD_IDENTITY_PROVIDER_LOCATION}"
-        env:
-          TEST_WORKLOAD_IDENTITY_PROVIDER_LOCATION: ${{ secrets.TEST_WORKLOAD_IDENTITY_PROVIDER_LOCATION }}
-
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -45,9 +37,9 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           # Replace with your Workload Identity Provider Location
-          workload_identity_provider: ${{secrets.TEST_WORKLOAD_IDENTITY_PROVIDER_LOCATION}}
+          workload_identity_provider: ${{secrets.WORKLOAD_IDENTITY_PROVIDER_LOCATION}}
           # Replace with your GitHub Service Account
-          service_account: ${{secrets.TEST_SERVICE_ACCOUNT}}
+          service_account: ${{secrets.SERVICE_ACCOUNT}}
 
       - name: Configure Docker
         run: gcloud auth configure-docker --quiet
