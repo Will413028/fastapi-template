@@ -28,9 +28,16 @@ jobs:
       # Replace $PROJECT_ID with your project ID
       IMAGE_NAME: gcr.io/${{secrets.TEST_PROJECT_ID}}/app
 
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check secret length
+        run: echo "The length of the secret is ${#TEST_WORKLOAD_IDENTITY_PROVIDER_LOCATION}"
+        env:
+          TEST_WORKLOAD_IDENTITY_PROVIDER_LOCATION: ${{ secrets.TEST_WORKLOAD_IDENTITY_PROVIDER_LOCATION }}
+
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
