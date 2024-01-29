@@ -19,5 +19,5 @@ async def root():
 @app.get("/info")
 async def info(settings: Annotated[Settings, Depends(get_settings)]):
     return {
-        "app_name": settings.test_env,
+        "test_env_variable": settings.test_env,
     }
