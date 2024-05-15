@@ -1,11 +1,6 @@
 from pydantic import BaseModel
 
 
-class LoginInput(BaseModel):
-    account: str
-    password: str
-
-
 class UserCreateInput(BaseModel):
     account: str
     password: str
