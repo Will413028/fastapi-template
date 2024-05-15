@@ -104,7 +104,7 @@ def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db)
 ):
     try:
-        user = authenticate_user(form_data, db)
+        user = authenticate_user(form_data.username, form_data.password, db)
 
         access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 

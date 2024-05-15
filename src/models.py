@@ -1,9 +1,8 @@
 import datetime
-from enum import Enum
 
 from sqlalchemy import String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy.sql import func
+from sqlalchemy.sql import false, func
 
 from src.auth.constants import Role
 
@@ -31,8 +30,8 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     account: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
-    is_disabled: Mapped[bool] = mapped_column(nullable=False)
-    role: Mapped[Role] = mapped_column(Enum(Role), default=Role.GUEST)
+    is_disabled: Mapped[bool] = mapped_column(nullable=False, server_default=false())
+    role: Mapped[int] = mapped_column(server_default=str(Role.GUEST.value))
     created_at: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime.datetime] = mapped_column(
         server_default=func.now(), onupdate=func.now()

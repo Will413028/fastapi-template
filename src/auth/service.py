@@ -5,7 +5,7 @@ from jose import jwt
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from src.auth.schemas import LoginInput, UserCreateInput, UserInfo
+from src.auth.schemas import UserCreateInput, UserInfo
 from src.auth.utils import get_password_hash, verify_password
 from src.config import settings
 from src.database import get_db
@@ -68,13 +68,13 @@ def check_new_user(user: UserCreateInput, db: Session) -> UserCreateInput:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already exists")
 
 
-def authenticate_user(data: LoginInput, db: Session = Depends(get_db)) -> User:
-    db_user = get_user_by_account(db, data.account)
+def authenticate_user(account: str, password: str, db: Session = Depends(get_db)) -> User:
+    db_user = get_user_by_account(db, account)
 
     if not db_user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
-    if not verify_password(data.password, db_user.password):
+    if not verify_password(password, db_user.password):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Invalid password or account"
         )
