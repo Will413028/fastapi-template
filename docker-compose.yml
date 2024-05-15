@@ -9,8 +9,13 @@ services:
     ports:
       - "8000:8000"
     restart: always
+    environment:
+      DATABASE_URL: 
+      SECRET_KEY: 
+      ALGORITHM: 
+      ACCESS_TOKEN_EXPIRE_MINUTES: 
     depends_on:
-      beanfun_pos_postgresql:
+      postgresql:
         condition: service_healthy
   postgresql:
     container_name: 
