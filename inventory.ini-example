@@ -1,0 +1,7 @@
+[remote_server]
+alpine1 ansible_host=<remote ip> ansible_user=<username> ansible_password=<password> ansible_become_password=<password>
+
+[remote_server:vars]
+github_token=<github_token>
+github_repo=<github_repo>
+project_path=<project_path>

@@ -3,7 +3,7 @@ from typing import Annotated
 
 from fastapi import FastAPI, Depends
 
-from config import Settings
+from src.config import Settings
 
 app = FastAPI()
 

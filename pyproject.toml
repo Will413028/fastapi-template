@@ -1,0 +1,89 @@
+[tool.poetry]
+name = "fastapi-template"
+version = "0.1.0"
+description = ""
+authors = ["Will413028 <will413028@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+sqlalchemy = "^2.0.30"
+alembic = "^1.13.1"
+structlog = "^24.1.0"
+rich = "^13.7.1"
+better-exceptions = "^0.3.3"
+pydantic-settings = "^2.2.1"
+psycopg2-binary = "^2.9.9"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"
+ansible = "^9.5.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+    "W191",  # indentation contains tabs
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"docs_src/dependencies/tutorial007.py" = ["F821"]
+"docs_src/dependencies/tutorial008.py" = ["F821"]
+"docs_src/dependencies/tutorial009.py" = ["F821"]
+"docs_src/dependencies/tutorial010.py" = ["F821"]
+"docs_src/custom_response/tutorial007.py" = ["B007"]
+"docs_src/dataclasses/tutorial003.py" = ["I001"]
+"docs_src/path_operation_advanced_configuration/tutorial007.py" = ["B904"]
+"docs_src/path_operation_advanced_configuration/tutorial007_pv1.py" = ["B904"]
+"docs_src/custom_request_and_route/tutorial002.py" = ["B904"]
+"docs_src/dependencies/tutorial008_an.py" = ["F821"]
+"docs_src/dependencies/tutorial008_an_py39.py" = ["F821"]
+"docs_src/query_params_str_validations/tutorial012_an.py" = ["B006"]
+"docs_src/query_params_str_validations/tutorial012_an_py39.py" = ["B006"]
+"docs_src/query_params_str_validations/tutorial013_an.py" = ["B006"]
+"docs_src/query_params_str_validations/tutorial013_an_py39.py" = ["B006"]
+"docs_src/security/tutorial004.py" = ["B904"]
+"docs_src/security/tutorial004_an.py" = ["B904"]
+"docs_src/security/tutorial004_an_py310.py" = ["B904"]
+"docs_src/security/tutorial004_an_py39.py" = ["B904"]
+"docs_src/security/tutorial004_py310.py" = ["B904"]
+"docs_src/security/tutorial005.py" = ["B904"]
+"docs_src/security/tutorial005_an.py" = ["B904"]
+"docs_src/security/tutorial005_an_py310.py" = ["B904"]
+"docs_src/security/tutorial005_an_py39.py" = ["B904"]
+"docs_src/security/tutorial005_py310.py" = ["B904"]
+"docs_src/security/tutorial005_py39.py" = ["B904"]
+"docs_src/dependencies/tutorial008b.py" = ["B904"]
+"docs_src/dependencies/tutorial008b_an.py" = ["B904"]
+"docs_src/dependencies/tutorial008b_an_py39.py" = ["B904"]
+
+
+[tool.ruff.lint.isort]
+known-third-party = ["fastapi", "pydantic", "starlette"]
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true
+
+[tool.ruff.format]
+docstring-code-format = true

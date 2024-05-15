@@ -1,0 +1,13 @@
+---
+- name: Use inventory
+  hosts: remote_server
+  tasks:
+  - name: Ensure the repository is present and up to date
+    git:
+      repo: "https://{{ github_token }}@{{ github_repo }}"
+      dest: "{{ project_path }}"
+  - name: Run docker container
+    become: True
+    shell:
+      cmd: "docker-compose up -d --build"
+      chdir: "{{ project_path }}"
