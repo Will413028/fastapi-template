@@ -1,23 +1,57 @@
-from functools import lru_cache
-from typing import Annotated
+import time
+from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
-from src.config import Settings
+from src.auth.router import router as user_router
+from src.config import settings
+from src.database import run_migrations
+from src.logger import stru_logger
 
-app = FastAPI()
+origins = [
+    "*",
+]
 
-@lru_cache
-def get_settings():
-    return Settings()
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        stru_logger.info("Running migrations...")
+        run_migrations()
+        stru_logger.info("Migrations completed.")
+    except Exception as e:
+        stru_logger.exception(f"run_migrations failed, error: {e}")
+
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
 
 
 @app.get("/info")
-async def info(settings: Annotated[Settings, Depends(get_settings)]):
+async def info():
     return {
-        "test_env_variable": settings.test_env,
+        "env": settings,
     }
+
+
+app.include_router(user_router)
