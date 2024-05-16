@@ -38,15 +38,8 @@ router = APIRouter()
                     "example": {"detail": "An error message explaining the specific issue."}
                 }
             },
-            "description": """
-                Bad Request - The request could not be understood by the server.
-                Possible reasons include:
-                - Wrong SMS code
-                - User already exists
-                - User create failed duo to ...
-                The `detail` field in the response will provide more information about the error.
-            """,
-        }
+            "description": "An error message explaining the specific issue.",
+        },
     },
     tags=["user"],
 )
@@ -83,9 +76,8 @@ async def register(user_data: UserCreateInput, db: Session = Depends(get_db)):
                     "example": {"detail": "An error message explaining the specific issue."}
                 }
             },
-            "description": "Bad Request - The request could not be understood by the server",
         },
-        status.HTTP_403_FORBIDDEN: {
+        status.HTTP_401_UNAUTHORIZED: {
             "model": dict[str, str],
             "content": {
                 "application/json": {"example": {"detail": "Invalid password or username"}}
@@ -96,6 +88,16 @@ async def register(user_data: UserCreateInput, db: Session = Depends(get_db)):
             "model": dict[str, str],
             "content": {"application/json": {"example": {"detail": "User not found"}}},
             "description": "User not found",
+        },
+        status.HTTP_422_UNPROCESSABLE_ENTITY: {
+            "model": dict[str, str],
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Invalid input data. Please check the input fields for errors."
+                    }
+                }
+            },
         },
     },
     tags=["user"],
@@ -124,7 +126,51 @@ def login(
         ) from e
 
 
-@router.get("/user/info", response_model=UserInfo, tags=["user"])
+@router.get(
+    "/user/info",
+    responses={
+        status.HTTP_400_BAD_REQUEST: {
+            "model": dict[str, str],
+            "content": {
+                "application/json": {
+                    "example": {"detail": "An error message explaining the specific issue"}
+                }
+            },
+            "description": "An error message explaining the specific issue.",
+        },
+        status.HTTP_401_UNAUTHORIZED: {
+            "model": dict[str, str],
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Unauthorized - The request requires user authentication"}
+                }
+            },
+        },
+        status.HTTP_403_FORBIDDEN: {
+            "model": dict[str, str],
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Permission denied - "
+                        "The client does not have permission to access the requested resource"
+                    }
+                }
+            },
+        },
+        status.HTTP_422_UNPROCESSABLE_ENTITY: {
+            "model": dict[str, str],
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Invalid input data. Please check the input fields for errors."
+                    }
+                }
+            },
+        },
+    },
+    response_model=UserInfo,
+    tags=["user"],
+)
 def _get_current_user_info(current_user: User = Depends(get_current_user)):
     try:
         return get_user_info(current_user)

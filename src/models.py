@@ -18,9 +18,9 @@ class User(Base):
     Attributes:
         id (int): The unique identifier for the user.
         account (str): The user's account name.
-        password (str): The user's password.
+        password (str): The user's hashed password.
         is_disabled (bool): Indicates whether the user is disabled or not.
-        role (Role): The role of the user, represented by an instance of the Role enum.
+        role (int): The user's role in the system.
         created_at (datetime.datetime): The timestamp of when the user was created.
         updated_at (datetime.datetime): The timestamp of when the user was last updated.
     """
