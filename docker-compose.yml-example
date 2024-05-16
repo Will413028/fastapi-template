@@ -10,7 +10,7 @@ services:
       - "8000:8000"
     restart: always
     environment:
-      DATABASE_URL: 
+      DATABASE_URL: driver://user:pass@postgresql/databasename
       SECRET_KEY: 
       ALGORITHM: 
       ACCESS_TOKEN_EXPIRE_MINUTES: 
