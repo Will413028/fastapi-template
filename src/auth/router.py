@@ -1,6 +1,7 @@
 from datetime import timedelta
 from typing import Annotated
 
+from constants import common_responses
 from fastapi import (
     APIRouter,
     Depends,
@@ -20,7 +21,6 @@ from src.auth.service import (
     get_user_info,
 )
 from src.config import settings
-from src.constans import common_responses
 from src.database import get_db
 from src.logger import stru_logger
 
