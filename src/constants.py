@@ -28,6 +28,14 @@ common_responses = {
             }
         },
     },
+    status.HTTP_404_NOT_FOUND: {
+        "model": dict[str, str],
+        "content": {
+            "application/json": {
+                "example": {"detail": "XXX was not found"}
+            }
+        }
+    },
     status.HTTP_422_UNPROCESSABLE_ENTITY: {
         "model": dict[str, str],
         "content": {
