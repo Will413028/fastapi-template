@@ -6,9 +6,9 @@ T = TypeVar("T")
 
 
 class PaginatedResponse(BaseModel, Generic[T]):
-    total_count: int
-    total_pages: int
-    current_page: int
+    total_count: int = Field(..., example=100)
+    total_pages: int = Field(..., example=10)
+    current_page: int = Field(..., example=1)
     data: list[T]
 
 
