@@ -83,12 +83,10 @@ async def register(user_data: UserCreateInput, db: Session = Depends(get_db)):
             "content": {
                 "application/json": {"example": {"detail": "Invalid password or username"}}
             },
-            "description": "Invalid password or username",
         },
         status.HTTP_404_NOT_FOUND: {
             "model": dict[str, str],
             "content": {"application/json": {"example": {"detail": "User not found"}}},
-            "description": "User not found",
         },
         status.HTTP_422_UNPROCESSABLE_ENTITY: {
             "model": dict[str, str],

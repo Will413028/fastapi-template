@@ -5,18 +5,18 @@ from pydantic import BaseModel, Field
 T = TypeVar("T")
 
 
-class PaginatedResponse(BaseModel, Generic[T]):
+class PaginatedDataResponse(BaseModel, Generic[T]):
     total_count: int = Field(..., example=100)
     total_pages: int = Field(..., example=10)
     current_page: int = Field(..., example=1)
     data: list[T]
 
 
-class ListResponse(BaseModel, Generic[T]):
+class ListDataResponse(BaseModel, Generic[T]):
     data: list[T]
 
 
-class DateResponse(BaseModel, Generic[T]):
+class DataResponse(BaseModel, Generic[T]):
     data: T
 
 
