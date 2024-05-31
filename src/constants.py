@@ -1,6 +1,6 @@
 from fastapi import status
 
-common_responses = {
+COMMON_RESPONSES = {
     status.HTTP_400_BAD_REQUEST: {
         "model": dict[str, str],
         "content": {

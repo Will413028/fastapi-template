@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Annotated
 
-from constants import common_responses
+from constants import COMMON_RESPONSES
 from fastapi import (
     APIRouter,
     Depends,
@@ -127,7 +127,7 @@ def login(
 
 @router.get(
     "/user/info",
-    responses=common_responses,
+    responses=COMMON_RESPONSES,
     response_model=UserInfo,
     tags=["user"],
 )
