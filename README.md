@@ -86,7 +86,7 @@ poetry add <library_name>
 
 ### Add Dependency to dev
 ```bash
-poetry add <library_name> --dev-dependency
+poetry add <library_name> --dev
 ```
 
 ### Export Requirements
