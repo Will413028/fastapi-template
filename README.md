@@ -5,7 +5,29 @@
 ### Run the Server
 
 ```bash
-uvicorn src.main:app --reload
+make run
+```
+
+### Code lint
+
+```bash
+make lint
+```
+
+### Run Tests
+
+```bash
+make test
+```
+
+### Export Requirements
+```bash
+make lock
+```
+
+### Deploy to remote server by ansible
+```bash
+make deploy
 ```
 
 ### Docker
@@ -20,19 +42,6 @@ sudo docker build -t <image_name>:<tag> .
 
 ```bash
 docker run --name test -p 8000:8000
-```
-
-### Ansible deploy 
-```bash
-ansible-playbook -i inventory.ini playbook.yml
-```
-
-### Testing
-
-Run Tests
-
-```bash
-python -m pytest
 ```
 
 ### Database Operations
@@ -87,63 +96,4 @@ poetry add <library_name>
 ### Add Dependency to dev
 ```bash
 poetry add <library_name> --dev
-```
-
-### Export Requirements
-
-Export Requirements to Text Files
-
-```bash
-poetry export -f requirements.txt -o ./requirements/prod.txt
-```
-
-```bash
-poetry export -f requirements.txt -o ./requirements/dev.txt --with dev
-```
-
-### Code Formatting
-
-```bash
-ruff check --fix
-
-ruff format
-```
-
-### Additional Libraries
-
-#### Structlog
-
-Reference: [Structlog](https://myapollo.com.tw/blog/python-structlog/)
-
-#### IceCream
-
-Reference: [IceCream Module](https://myapollo.com.tw/blog/python-module-icecream/)
-
-#### Better-Exceptions
-
-Reference: [Better-Exceptions](https://myapollo.com.tw/blog/python-better-exceptions/)
-
-#### Rich
-
-Reference: [Rich Library](https://github.com/Textualize/rich)
-
-### VS Code Debugger Configuration
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python Debugger: FastAPI",
-            "type": "debugpy",
-            "request": "launch",
-            "module": "uvicorn",
-            "args": [
-                "src.main:app",
-                "--reload"
-            ],
-            "jinja": true
-        }
-    ]
-}
 ```
