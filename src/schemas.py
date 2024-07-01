@@ -21,11 +21,4 @@ class DataResponse(BaseModel, Generic[T]):
 
 
 class DetailResponse(BaseModel):
-    """
-    Basic return message.
-
-    Attributes:
-        detail (str): The detail of the return message.
-    """
-
     detail: str = Field(..., example="successful")
