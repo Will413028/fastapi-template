@@ -16,6 +16,10 @@ lock:
 	poetry export -f requirements.txt -o ./requirements/prod.txt
 	poetry export -f requirements.txt -o ./requirements/dev.txt --with dev
 
-.PHONY: deploy
-deploy:
-	ansible-playbook -i inventory.ini playbook.yml
+.PHONY: deploy-gitlab
+deploy-gitlab:
+	ansible-playbook -i ./ansible/gitlab_inventory.ini ./ansible/gitlab_playbook.yml
+
+.PHONY: deploy-github
+deploy-github:
+	ansible-playbook -i ./ansible/github_inventory.ini ./ansible/github_playbook.yml

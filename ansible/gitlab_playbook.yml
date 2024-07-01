@@ -1,0 +1,14 @@
+---
+- name: Use inventory
+  hosts: remote_server
+  tasks:
+  - name: Ensure the repository is present and up to date
+    git:
+      repo: 'http://{{ gitlab_user }}:{{ gitlab_token }}@{{ gitlab_repo }}'
+      dest: '{{ project_path }}'
+      update: yes
+  - name: Run docker container
+    become: True
+    shell:
+      cmd: "docker-compose up -d --build"
+      chdir: '{{ project_path }}'
