@@ -26,7 +26,11 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    lifespan=lifespan,
+    docs_url="/docs" if settings.MODE == "dev" else None,
+    redoc_url="/redoc" if settings.MODE == "dev" else None,
+)
 
 
 app.add_middleware(

@@ -5,7 +5,7 @@ from alembic import command
 from alembic.config import Config
 from src.config import settings
 
-if settings.DEBUG_MODE:
+if settings.MODE == "dev":
     engine = create_engine(settings.DATABASE_URL, echo=True)
 else:
     engine = create_engine(settings.DATABASE_URL, pool_size=100, max_overflow=50, pool_recycle=300)
