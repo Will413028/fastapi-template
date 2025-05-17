@@ -77,10 +77,10 @@ sudo docker-compose up -d --build
 
 ### Add Dependency
 ```bash
-poetry add <library_name>
+uv add <library_name>
 ```
 
 ### Add Dependency to dev
 ```bash
-poetry add <library_name> --dev
+uv add --dev <library_name>
 ```

@@ -1,31 +1,27 @@
-[tool.poetry]
+[project]
 name = "fastapi-template"
 version = "0.1.0"
 description = ""
-authors = ["Will413028 <will413028@gmail.com>"]
 readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.15.2",
+    "better-exceptions>=0.3.3",
+    "fastapi[standard]>=0.115.12",
+    "passlib[bcrypt]>=1.7.4",
+    "psycopg2-binary>=2.9.10",
+    "pydantic-settings>=2.9.1",
+    "python-jose[cryptography]>=3.4.0",
+    "rich>=14.0.0",
+    "sqlalchemy>=2.0.41",
+    "structlog>=25.3.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.12"
-fastapi = "^0.111.0"
-sqlalchemy = "^2.0.30"
-alembic = "^1.13.1"
-structlog = "^24.1.0"
-rich = "^13.7.1"
-better-exceptions = "^0.3.3"
-pydantic-settings = "^2.2.1"
-psycopg2-binary = "^2.9.9"
-python-jose = {extras = ["cryptography"], version = "^3.3.0"}
-passlib = {extras = ["bcrypt"], version = "^1.7.4"}
-
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.2.0"
-ansible = "^9.5.1"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "ansible>=11.5.0",
+    "pytest>=8.3.5",
+]
 
 [tool.ruff]
 line-length = 100

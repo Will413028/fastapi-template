@@ -1,6 +1,6 @@
 .PHONY: run
 run:
-	uvicorn src.main:app --reload
+	uv run fastapi dev ./src/main.py
 
 .PHONY: lint
 lint:
