@@ -1,6 +1,6 @@
 .PHONY: run
 run:
-	uvicorn src.main:app --reload
+	uv run fastapi dev ./src/main.py
 
 .PHONY: lint
 lint:
@@ -10,11 +10,6 @@ lint:
 .PHONY: test
 test:
 	python3 -m pytest
-
-.PHONY: lock
-lock:
-	poetry export -f requirements.txt -o ./requirements/prod.txt
-	poetry export -f requirements.txt -o ./requirements/dev.txt --with dev
 
 .PHONY: deploy-gitlab
 deploy-gitlab:
