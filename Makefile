@@ -11,11 +11,6 @@ lint:
 test:
 	python3 -m pytest
 
-.PHONY: lock
-lock:
-	poetry export -f requirements.txt -o ./requirements/prod.txt
-	poetry export -f requirements.txt -o ./requirements/dev.txt --with dev
-
 .PHONY: deploy-gitlab
 deploy-gitlab:
 	ansible-playbook -i ./ansible/gitlab_inventory.ini ./ansible/gitlab_playbook.yml
