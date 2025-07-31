@@ -18,3 +18,12 @@ deploy-gitlab:
 .PHONY: deploy-github
 deploy-github:
 	ansible-playbook -i ./ansible/github_inventory.ini ./ansible/github_playbook.yml
+
+.PHONY: generate_migration
+generate_migration:
+	@read -p "Enter migration name: " migration_name; \
+	alembic revision --autogenerate -m "$${migration_name}"
+
+.PHONY: migration
+migration:
+	alembic upgrade head
